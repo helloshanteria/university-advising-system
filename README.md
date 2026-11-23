@@ -1,59 +1,83 @@
 # University Academic Advising Appointment System
 
-## About This Project
+## Project Overview
 
-For my Systems Analysis and Design course at Georgia Gwinnett College, I designed a University Academic Advising Appointment System using Visual Paradigm.
+For my Systems Analysis and Design course at Georgia Gwinnett College, I used Visual Paradigm to design a University Academic Advising Appointment System.
 
-The goal of this project is to model a system that allows students to schedule appointments with academic advisors, while giving faculty advisors and department administrators the tools they need to manage the advising process.
+The project focuses on creating a more organized way for students to schedule appointments with academic advisors while allowing advisors to manage their availability and administrators to oversee advising assignments.
 
-This project focuses on the planning and design stages of software development, before building the actual application.
+My goal was to understand how to take system requirements and turn them into a technical design before moving into development.
 
-## How I Designed It
+**Tools Used:** Visual Paradigm, UML  
+**Technical Concepts:** Requirements Analysis, Object-Oriented Design, Class Relationships, System Architecture, Software Development Life Cycle (SDLC)  
+**Project Status:** System Design Phase
 
-### 1. Identifying System Users and Requirements
+## Design Process
 
-I started by creating a UML Use Case Diagram in Visual Paradigm to identify who would use the system and what they needed to be able to do.
+### 1. Identifying Users and System Requirements
 
-I identified three main users:
+I started with a UML Use Case Diagram to identify the different users and the functions they would need.
 
-- **Students:** View available advisors and time slots, schedule appointments, and cancel or reschedule appointments.
-- **Faculty Advisors:** Manage their availability, view scheduled appointments, and record advising notes.
-- **Department Administrators:** Assign faculty advisors and generate advising reports.
+The system includes three main roles:
 
-After identifying the users, I added the different actions they could perform and connected them to their corresponding roles.
+- **Students:** View advisors and available time slots, schedule appointments, and manage existing appointments.
+- **Faculty Advisors:** Manage availability, view scheduled appointments, and record advising notes.
+- **Department Administrators:** Assign advisors and generate advising reports.
 
-I also used UML relationships to show how certain actions connect. For example, scheduling an appointment includes viewing available time slots.
+I mapped out the actions for each role and used UML relationships to show how certain functions connect. For example, scheduling an appointment includes viewing available time slots.
 
-This helped me understand the system from the user's perspective before moving into the technical design.
+This was my starting point for understanding the system's requirements and making sure the design accounted for each user's responsibilities.
 
 **UML Use Case Diagram**
 
 ![University Academic Advising Use Case Diagram](screenshots/diagrams:use-case-diagram.png)
 
-### 2. Creating the UML Class Diagram
+### 2. Designing the System Structure
 
-After identifying the system users and their actions, I created a UML Class Diagram in Visual Paradigm to plan how the system would be organized.
+Next, I created a UML Class Diagram to show how the system would be organized.
 
-I started with a `User` class for shared information like name, email, and authentication. Then I added `Student`, `Advisor`, and `Administrator` as separate classes that inherit from `User`. Each role has its own methods based on what that user needs to do in the system.
+I started with a `User` class containing shared information such as name, email, and authentication. From there, I created the `Student`, `Advisor`, and `Administrator` classes using inheritance.
 
-Next, I added classes for the information the system needs to manage, including appointments, advisor assignments, available time slots, recurring availability, and advising notes.
+I then added classes to manage appointments, advisor assignments, availability slots, and advising notes.
 
-I connected the classes using associations and multiplicities to show how they relate. For example, one student can have multiple appointments, while each appointment belongs to one student. I also modeled how an appointment is linked to an availability slot to help prevent double-booking.
+One of the more challenging parts was defining the relationships between classes. I had to consider how many appointments a student could schedule, how advisors would manage multiple time slots, and how appointments would connect to available slots.
 
-Finally, I added supporting classes such as `AppointmentController`, `SchedulingService`, `AppointmentRepository`, `NotificationService`, and `AuditEvent`. These helped me separate the appointment workflow from data storage, notifications, and activity tracking.
+I also included supporting components such as:
 
-This part of the project helped me understand that a class diagram is more than a list of objects. I had to think about what each class is responsible for and how the different parts of the system would work together.
+- `AppointmentController` — Handles appointment requests.
+- `SchedulingService` — Manages scheduling operations and availability checks.
+- `AppointmentRepository` — Represents how appointment records would be accessed and saved.
+- `NotificationService` — Supports appointment confirmations and reminders.
+- `AuditEvent` — Represents records of system activity.
+
+Separating these responsibilities helped me better understand how the different parts of an application could work together without putting everything into one class.
 
 **UML Class Diagram**
 
 ![University Academic Advising Class Diagram](screenshots/class-diagram.png)
 
-### 3. Creating the UML Sequence Diagram
+### 3. Modeling the Appointment Scheduling Process
 
-*Documentation coming next.*
+*Sequence diagram documentation coming next.*
 
-## What's Next?
+## What I Learned
 
-I plan to build on these diagrams by developing a working application using Java or Python and a relational database.
+This project gave me a better understanding of how system design connects business requirements to technical solutions.
 
-**Project status:** System design and documentation in progress.
+The biggest takeaway for me was learning to think beyond individual features and consider how the entire system would work together.
+
+Working with UML also helped me practice object-oriented design concepts, particularly inheritance, class relationships, and separation of responsibilities.
+
+## Next Steps
+
+I plan to use these designs as the foundation for building a working application using Java or Python with a relational database.
+
+My next goal is to implement the appointment scheduling process, including checking availability, saving appointments, and preventing scheduling conflicts.
+
+As the project develops, I'd also like to explore reporting and analytics features that could help administrators understand advising activity and appointment trends.
+
+---
+
+**Shanteria Johnson**  
+B.S. Information Technology — Data Science & Analytics  
+Georgia Gwinnett College
