@@ -28,7 +28,7 @@ This helped me understand the system from the user's perspective before moving i
 
 **UML Use Case Diagram**
 
-![University Academic Advising Use Case Diagram](diagrams/use-case-diagram.png)
+![University Academic Advising Use Case Diagram](screenshots/diagrams:use-case-diagram.png)
 
 ### 2. Creating the UML Class Diagram
 
