@@ -32,7 +32,21 @@ This helped me understand the system from the user's perspective before moving i
 
 ### 2. Creating the UML Class Diagram
 
-*Documentation coming next.*
+After identifying the system users and their actions, I created a UML Class Diagram in Visual Paradigm to plan how the system would be organized.
+
+I started with a `User` class for shared information like name, email, and authentication. Then I added `Student`, `Advisor`, and `Administrator` as separate classes that inherit from `User`. Each role has its own methods based on what that user needs to do in the system.
+
+Next, I added classes for the information the system needs to manage, including appointments, advisor assignments, available time slots, recurring availability, and advising notes.
+
+I connected the classes using associations and multiplicities to show how they relate. For example, one student can have multiple appointments, while each appointment belongs to one student. I also modeled how an appointment is linked to an availability slot to help prevent double-booking.
+
+Finally, I added supporting classes such as `AppointmentController`, `SchedulingService`, `AppointmentRepository`, `NotificationService`, and `AuditEvent`. These helped me separate the appointment workflow from data storage, notifications, and activity tracking.
+
+This part of the project helped me understand that a class diagram is more than a list of objects. I had to think about what each class is responsible for and how the different parts of the system would work together.
+
+**UML Class Diagram**
+
+![University Academic Advising Class Diagram](screenshots/class-diagram.png)
 
 ### 3. Creating the UML Sequence Diagram
 
