@@ -109,9 +109,11 @@ It also reinforced why planning matters: decisions about workflows and data rela
 
 ## Next Steps
 
-With the three UML diagrams completed, I plan to use these designs as a possible foundation for a working application using Java or Python with a relational database.
+My next goal is to turn this system design into a functional application using Python or Java and a relational database. I want to build on the existing UML diagrams and business requirements to gain hands-on experience with the development and implementation phases of the software development life cycle.
 
-Future development could include implementing scheduling and conflict checks, saving appointment records, and exploring reporting or analytics to help administrators understand advising activity and appointment trends.
+I plan to implement appointment scheduling, advisor availability, conflict prevention, virtual appointment support, notifications, and audit tracking. I also want to explore reporting and analytics to help administrators understand advising activity and appointment trends.
+
+Through this next phase, I hope to strengthen my programming, database design, and system integration skills while learning how to translate a proposed technical design into a working application.
 
 ---
 
