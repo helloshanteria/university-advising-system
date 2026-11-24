@@ -4,119 +4,156 @@
 
 ## Project Overview
 
-For my Systems Analysis and Design course, I used Visual Paradigm to design a proposed University Academic Advising Appointment System.
+For my Systems Analysis and Design course at Georgia Gwinnett College, I designed a University Academic Advising Appointment System to explore how technology can improve the coordination of academic advising.
 
-I approached the project by first considering the university's operational needs: who would use the system, what each person needed to accomplish, and how an appointment should move through the process. I then translated those requirements into UML diagrams that describe the proposed system's behavior and structure.
+Rather than jumping straight into development, I started by looking at the business side of the system. I wanted to understand who would use it, what each user needed to accomplish, and how the system could support their daily responsibilities.
 
-**Tools Used:** Visual Paradigm, UML  
-**Technical Concepts:** Business Requirements Analysis, Process Modeling, Object-Oriented Design, Class Relationships, System Architecture, Software Development Life Cycle (SDLC)  
-**Project Status:** System Design Phase — use case, class, and scheduling sequence diagrams completed; not a deployed application
+From there, I translated those requirements into three UML diagrams that represent the system's functionality, structure, and behavior.
 
-## Business Problem
+**Tools:** Visual Paradigm, UML
 
-Academic advising involves coordination among students, faculty advisors, and department administrators. In a hypothetical university environment without a centralized scheduling process, students might have difficulty identifying available appointment times, advisors might have limited visibility into upcoming meetings, and administrators might struggle to review advising assignments or activity.
+**Skills Applied:** Business Requirements Analysis, Systems Analysis and Design, Business Process Modeling, Object-Oriented Design, System Architecture, Technical Documentation, and Software Development Life Cycle (SDLC)
 
-The business challenge I explored was how to organize these activities into a consistent process that supports students while giving advisors and administrators the information they need.
+**Project Status:** System Design Phase — UML diagrams completed; application development planned.
 
-*This is a hypothetical scenario for coursework, not an assessment of an existing university system.*
+## Understanding the Business Problem
+
+Academic advising requires coordination between students, faculty advisors, and department administrators. Without a centralized scheduling process, managing appointments, communicating availability, and maintaining consistent records could become challenging.
+
+When approaching this project, I considered several questions:
+
+- How can students easily identify their assigned advisor and schedule an appointment?
+- How can advisors manage their availability and prevent scheduling conflicts?
+- How can administrators maintain visibility into advising assignments and appointment activity?
+- How can the system maintain accurate and consistent information?
+
+These questions helped me establish the purpose of the system before determining how it should be designed.
+
+*This project is based on a hypothetical university scenario developed for coursework.*
 
 ## Business Requirements
 
-I identified three main user groups and their responsibilities:
+I identified three primary stakeholders and the functionality each would need from the system.
 
-- **Students:** View assigned advisors and available time slots, request appointments, and manage existing bookings.
-- **Faculty Advisors:** Manage availability, view scheduled appointments, and record advising notes.
-- **Department Administrators:** Assign advisors to students and generate appointment reports.
+| Stakeholder | Business Needs |
+|---|---|
+| Students | View assigned advisors, check availability, schedule, reschedule, and cancel appointments. |
+| Faculty Advisors | Manage availability, view scheduled appointments, and record advising notes. |
+| Department Administrators | Assign advisors to students, review advisor assignments, and generate appointment reports. |
 
-I also considered requirements that affect more than one role, such as checking availability before booking, preventing scheduling conflicts, maintaining consistent appointment records, and supporting confirmations.
+Beyond individual user needs, I also considered business rules such as preventing double bookings, supporting virtual and in-person appointments, maintaining appointment records, and communicating scheduling outcomes.
 
 ## Translating Business Requirements into System Design
 
-### 1. Use Case Diagram — Defining User Needs
+### 1. UML Use Case Diagram — Understanding User Needs
 
-I began with a UML Use Case Diagram to identify the users and the actions they need to perform.
+I started with a use case diagram to identify how each stakeholder would interact with the system.
 
-This helped me move from general business needs to specific system functions. For example, scheduling an appointment depends on being able to view available time slots. Mapping these interactions gave me a clearer picture of the system's scope before I designed its internal structure.
+This allowed me to establish the scope of the application and determine which functions were necessary to support each user's responsibilities.
 
-**UML Use Case Diagram**
+For example, before a student can schedule an appointment, they need access to their assigned advisor and available time slots. Understanding these relationships helped me identify the functionality required before designing the system's internal structure.
 
 ![University Academic Advising Use Case Diagram](screenshots/diagrams:use-case-diagram.png)
 
-### 2. Class Diagram — Organizing the System
+### 2. UML Class Diagram — Designing the System Structure
 
-Next, I created a UML Class Diagram to represent the proposed system's classes, attributes, operations, and relationships.
+After identifying the functional requirements, I created a class diagram to organize the information, operations, and relationships within the system.
 
-I started with a shared `User` class and used inheritance for `Student`, `Advisor`, and `Administrator`. I then modeled appointments, advisor assignments, availability slots, and advising notes.
+I applied object-oriented design principles by creating a shared `User` class with three specialized classes: `Student`, `Advisor`, and `Administrator`.
 
-One of the more challenging parts was deciding how the classes should relate to one another. I considered how students could have multiple appointments over time, how advisors could offer multiple time slots, and how an appointment should connect to a specific slot.
+I also modeled relationships between appointments, advisor assignments, availability slots, and advising notes.
 
-I also separated key responsibilities into supporting components:
+One of the more challenging parts of this process was determining how these classes should relate to one another while supporting the business requirements.
 
-- `AppointmentController` — Receives appointment requests.
-- `SchedulingService` — Coordinates availability checks and scheduling operations.
-- `AppointmentRepository` — Represents access to stored appointment records.
-- `NotificationService` — Supports confirmations and reminders.
-- `AuditEvent` — Represents records of system activity.
+To keep responsibilities organized, I introduced several supporting components:
 
-This helped me see how the business requirements translate into technical responsibilities rather than placing every function in one class.
+| Component | Responsibility |
+|---|---|
+| AppointmentController | Receives appointment requests. |
+| SchedulingService | Manages scheduling logic and conflict checks. |
+| AppointmentRepository | Provides access to appointment records. |
+| NotificationService | Supports appointment confirmations and reminders. |
+| AuditEvent | Records system activity. |
 
-**UML Class Diagram**
+Designing these components helped me understand the importance of separating responsibilities and organizing a system in a way that could support future development.
 
 ![University Academic Advising Class Diagram](screenshots/class-diagram.png)
 
-### 3. Sequence Diagram — Modeling the Appointment Workflow
+### 3. UML Sequence Diagram — Modeling the Appointment Workflow
 
-I created a UML Sequence Diagram in Visual Paradigm to show how the system would process an academic advising appointment from the initial request to the final response.
+The sequence diagram allowed me to take the structure I designed and demonstrate how the different components would work together when a student requests an appointment.
 
-The scheduling service checks for conflicts and verifies the selected slot's availability before allowing the booking to proceed. If the slot is available and no conflict exists, the system reserves the slot, saves the appointment, sends a confirmation, and records the scheduling activity. For virtual appointments, the design also includes an optional meeting link. If the slot is unavailable or a conflict is detected, the request is rejected without creating an appointment.
+I modeled two possible scheduling outcomes:
 
-| Business requirement | Technical design |
-| --- | --- |
-| Prevent scheduling conflicts | `checkConflicts()`, `isAvailable()`, and `blockSlot()` |
-| Support virtual advising | `createMeetingLink()` in an optional UML fragment |
-| Maintain appointment records | `AppointmentRepository.save()` |
-| Keep students informed | `NotificationService.sendConfirmation()` and a clear rejection response |
-| Support accountability | `AuditEvent.recordEvent()` |
+**Successful Appointment**
 
-The diagram uses an alternative (`alt`) fragment to distinguish successful and unsuccessful requests and an optional (`opt`) fragment for virtual appointments. Only meeting link creation is conditional on the appointment mode; reserving the slot, saving the appointment, sending confirmation, and recording the event apply to both modes.
+- Verify availability and check for scheduling conflicts.
+- Generate a meeting link if the appointment is virtual.
+- Reserve the selected time slot.
+- Save the appointment record.
+- Send an appointment confirmation.
+- Record the scheduling activity.
 
-One important design consideration is that reserving the slot and saving the appointment must be atomic in a working implementation to prevent double bookings. The diagram assumes successful persistence and does not model other failure scenarios.
+**Unsuccessful Appointment**
 
-**UML Sequence Diagram**
+- Identify an unavailable time slot or scheduling conflict.
+- Reject the appointment request.
+- Communicate the outcome to the student without creating an appointment.
+
+I used an alternative (`alt`) fragment to represent the two scheduling outcomes and an optional (`opt`) fragment to handle virtual meeting link creation.
 
 ![University Academic Advising Sequence Diagram](screenshots/University_Student_Advising_Student.png)
 
+## Connecting Business Requirements to Technical Solutions
+
+An important part of this project was understanding how individual technical operations support larger business objectives.
+
+| Business Requirement | Technical Solution |
+|---|---|
+| Prevent scheduling conflicts | `checkConflicts()`, `isAvailable()`, and `blockSlot()` |
+| Support virtual advising | `createMeetingLink()` |
+| Maintain appointment records | `AppointmentRepository.save()` |
+| Improve communication | `NotificationService.sendConfirmation()` |
+| Support accountability | `AuditEvent.recordEvent()` |
+
+I also considered data integrity during the scheduling process. In a working application, reserving a time slot and saving the appointment would need to occur within an atomic transaction to help prevent double bookings and inconsistent records.
 
 ## Expected Business Value
 
-If implemented and tested, the proposed system could help a university:
+If developed and implemented, this system could support a university by:
 
-- **Reduce scheduling conflicts** by checking slot availability before confirming appointments.
-- **Improve access to advising** by making available times easier for students to identify.
-- **Support advisor planning** through clearer schedule and availability information.
-- **Improve administrative oversight** with advisor assignments and appointment reporting.
-- **Maintain consistent records** of appointments and advising activity.
+- Reducing scheduling conflicts and administrative workload.
+- Making academic advising more accessible to students.
+- Improving visibility into advisor availability.
+- Supporting consistent appointment and advising records.
+- Providing administrators with information for reporting and decision-making.
 
-These are potential benefits of the design, not measured results from a live system.
+These are anticipated benefits of the proposed design rather than measured results from an implemented application.
 
 ## What I Learned
 
-The biggest lesson for me was that system design starts with understanding the problem, not immediately building the application.
+Before working on this project, I primarily associated application development with programming. This experience helped me understand how much planning and decision-making take place before development begins.
 
-I had to think about the needs of different users, how information should be organized, and what should happen when an appointment is requested. Creating the UML diagrams helped me connect business requirements to object-oriented design concepts, including inheritance, class relationships, and separation of responsibilities.
+I learned how to evaluate a business problem, identify stakeholder needs, establish functional requirements, and translate those requirements into a technical design.
 
-It also reinforced why planning matters: decisions about workflows and data relationships are easier to examine and improve before development begins.
+It also helped me understand how object-oriented programming concepts, business rules, data relationships, and system architecture work together to support a larger business objective.
 
-## Next Steps
+As an Information Technology student concentrating in Data Science and Analytics, I found this especially valuable because the way a system is designed can directly influence the quality, accessibility, and usefulness of the data it produces.
 
-My next goal is to turn this system design into a functional application using Python or Java and a relational database. I want to build on the existing UML diagrams and business requirements to gain hands-on experience with the development and implementation phases of the software development life cycle.
+## What's Next
 
-I plan to implement appointment scheduling, advisor availability, conflict prevention, virtual appointment support, notifications, and audit tracking. I also want to explore reporting and analytics to help administrators understand advising activity and appointment trends.
+Now that I've completed the system design, my next goal is to turn this project into a functional application using Python or Java and a relational database.
 
-Through this next phase, I hope to strengthen my programming, database design, and system integration skills while learning how to translate a proposed technical design into a working application.
+I'm looking forward to applying what I've learned in my programming, database, and systems analysis courses to develop the features I've designed, including appointment scheduling, availability management, conflict prevention, and notifications.
+
+I also want to explore how appointment data can be used for reporting and analytics to support administrative decision-making.
+
+Continuing this project will give me the opportunity to strengthen my technical skills while gaining a better understanding of how a business problem evolves from initial requirements and system design into a working application.
 
 ---
 
-**Shanteria Johnson**  
-B.S. Information Technology — Data Science & Analytics  
+**Shanteria Johnson**
+
+B.S. Information Technology — Data Science & Analytics
+
 Georgia Gwinnett College
