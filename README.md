@@ -8,9 +8,9 @@ For my Systems Analysis and Design course, I used Visual Paradigm to design a pr
 
 I approached the project by first considering the university's operational needs: who would use the system, what each person needed to accomplish, and how an appointment should move through the process. I then translated those requirements into UML diagrams that describe the proposed system's behavior and structure.
 
-**Tools Used:** Visual Paradigm, UML  
+**Tools Used:** Visual Paradigm, diagrams.net, UML  
 **Technical Concepts:** Business Requirements Analysis, Process Modeling, Object-Oriented Design, Class Relationships, System Architecture, Software Development Life Cycle (SDLC)  
-**Project Status:** System Design Phase — not a deployed application
+**Project Status:** System Design Phase — use case, class, and scheduling sequence diagrams completed; not a deployed application
 
 ## Business Problem
 
@@ -66,11 +66,26 @@ This helped me see how the business requirements translate into technical respon
 
 ### 3. Sequence Diagram — Modeling the Appointment Workflow
 
-*Sequence diagram in progress.*
+I created a UML Sequence Diagram to show how the system would process an academic advising appointment from the initial request to the final response.
 
-The next step is to model how a student's appointment request moves through the system. The planned sequence will show an availability check, the scheduling decision, and either a confirmation or an unavailable-slot response.
+The scheduling service checks for conflicts and verifies the selected slot's availability before allowing the booking to proceed. If the slot is available and no conflict exists, the system reserves the slot, saves the appointment, sends a confirmation, and records the scheduling activity. For virtual appointments, the design also includes an optional meeting link. If the slot is unavailable or a conflict is detected, the request is rejected without creating an appointment.
 
-This is important from a business perspective because a booking process needs to handle both successful requests and situations where the requested time is no longer available.
+| Business requirement | Technical design |
+| --- | --- |
+| Prevent scheduling conflicts | `checkConflicts()`, `isAvailable()`, and `blockSlot()` |
+| Support virtual advising | `createMeetingLink()` in an optional UML fragment |
+| Maintain appointment records | `AppointmentRepository.save()` |
+| Keep students informed | `NotificationService.sendConfirmation()` and a clear rejection response |
+| Support accountability | `AuditEvent.recordEvent()` |
+
+The diagram uses an alternative (`alt`) fragment to distinguish successful and unsuccessful requests and an optional (`opt`) fragment for virtual appointments.
+
+One important design consideration is that reserving the slot and saving the appointment must be atomic in a working implementation to prevent double bookings. The diagram assumes successful persistence and does not model other failure scenarios.
+
+**UML Sequence Diagram**
+
+![University Academic Advising Sequence Diagram](screenshots/University_Advising_Sequence.drawio.png)
+
 
 ## Expected Business Value
 
@@ -94,7 +109,7 @@ It also reinforced why planning matters: decisions about workflows and data rela
 
 ## Next Steps
 
-I plan to complete the appointment scheduling sequence diagram and use these designs as a possible foundation for a working application using Java or Python with a relational database.
+With the three UML diagrams completed, I plan to use these designs as a possible foundation for a working application using Java or Python with a relational database.
 
 Future development could include implementing scheduling and conflict checks, saving appointment records, and exploring reporting or analytics to help administrators understand advising activity and appointment trends.
 
